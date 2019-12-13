@@ -2,6 +2,9 @@ package com.example.articles.di
 
 import android.app.Application
 import com.example.article.ArticlesApp
+import com.example.article.articles.di.ArticlesRemoteModule
+import com.example.article.articles.di.DomainModule
+import com.example.article.articles.di.PresentationModule
 import com.example.article.di.ActivityBuilderModule
 import com.example.article.di.FragmentBuilderModule
 import com.example.article.di.NetworkModule
@@ -20,7 +23,10 @@ import javax.inject.Singleton
         NetworkModule::class,
         FragmentBuilderModule::class,
         ActivityBuilderModule::class,
-        AppModule::class
+        AppModule::class,
+        ArticlesRemoteModule::class,
+        PresentationModule::class,
+        DomainModule::class
     ]
 )
 interface ArticleAppComponent : AndroidInjector<ArticlesApp> {
