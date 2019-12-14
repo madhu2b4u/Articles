@@ -10,7 +10,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.article.R
 import com.example.article.articles.presentation.ui.adapter.ArticlesRecyclerAdapter
@@ -20,6 +19,10 @@ import com.example.article.common.ViewModelFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_articles.*
 import javax.inject.Inject
+import androidx.recyclerview.widget.DividerItemDecoration
+
+
+
 
 
 class ArticlesFragment : DaggerFragment() {
@@ -51,9 +54,10 @@ class ArticlesFragment : DaggerFragment() {
                         Status.ERROR -> hideLoading()
                         Status.SUCCESS -> {
                             hideLoading()
-                            it.data?.let { articles ->
-                                toolbar.title = articles.title
-                                articlesAdapter.populateArticles(articles.articles)
+                            it.data?.let { article ->
+                                toolbar.title = article.title
+                                val nonNullArticleList = article.articles.filter { it.description != null || it.title != null|| it.imageHref != null }
+                                articlesAdapter.populateArticles(nonNullArticleList)
                             }
 
                         }
@@ -74,11 +78,18 @@ class ArticlesFragment : DaggerFragment() {
     }
 
     private fun initViews() {
-        articlesRecycler.layoutManager = LinearLayoutManager(activity!!)
+        articlesRecycler.layoutManager = LinearLayoutManager(activity)
         articlesRecycler.adapter = articlesAdapter
         swipeRefresh.setOnRefreshListener {
             articlesViewModel.loadArticles()
         }
+
+        val dividerItemDecoration = DividerItemDecoration(
+            context, (articlesRecycler.layoutManager as LinearLayoutManager).orientation
+        )
+        articlesRecycler.addItemDecoration(dividerItemDecoration)
+
+
         activity?.let {
             (it as AppCompatActivity).setSupportActionBar(toolbar)
         }
