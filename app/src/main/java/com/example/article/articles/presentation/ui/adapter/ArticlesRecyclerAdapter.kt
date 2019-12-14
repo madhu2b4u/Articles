@@ -9,6 +9,7 @@ import com.example.article.articles.data.models.Article
 import kotlinx.android.synthetic.main.article_recycler_item.view.*
 import javax.inject.Inject
 
+
 class ArticlesRecyclerAdapter @Inject constructor() :
     RecyclerView.Adapter<ArticlesRecyclerAdapter.ArticleViewHolder>() {
 
@@ -35,9 +36,14 @@ class ArticlesRecyclerAdapter @Inject constructor() :
 
         fun bind(article: Article) {
             with(itemView) {
-                    tvTitle.text = article.title
-                    imgArticle.setImageURI(article.imageHref)
-                    tvDescription.text = article.description
+                    val title = article.title
+                    val desc = article.description
+                    val image = article.imageHref
+
+                    imgArticle.setImageURI(image)
+                    tvTitle.text = title
+                    if (desc == null) tvDescription.text = context.getText(R.string.no_description_available) else tvDescription.text = desc
+
             }
         }
 
