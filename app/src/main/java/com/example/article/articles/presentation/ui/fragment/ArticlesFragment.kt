@@ -51,7 +51,9 @@ class ArticlesFragment : DaggerFragment() {
                 articlesViewModel.articleResult.observe(this@ArticlesFragment, Observer {
                     when (it.status) {
                         Status.LOADING -> showLoading()
-                        Status.ERROR -> hideLoading()
+                        Status.ERROR -> {
+                            showErrorView()
+                        }
                         Status.SUCCESS -> {
                             hideLoading()
                             it.data?.let { article ->
@@ -77,6 +79,14 @@ class ArticlesFragment : DaggerFragment() {
         }
     }
 
+    private fun showErrorView() {
+        llNoDataLayout.visibility = View.VISIBLE
+        articlesRecycler.visibility = View.GONE
+        progressBar.visibility = View.GONE
+        if (swipeRefresh.isRefreshing)
+            swipeRefresh.isRefreshing = false
+    }
+
     private fun initViews() {
         articlesRecycler.layoutManager = LinearLayoutManager(activity)
         articlesRecycler.adapter = articlesAdapter
@@ -96,11 +106,13 @@ class ArticlesFragment : DaggerFragment() {
     }
 
     private fun showLoading() {
+        llNoDataLayout.visibility = View.GONE
         progressBar.visibility = View.VISIBLE
         articlesRecycler.visibility = View.GONE
     }
 
     private fun hideLoading() {
+        llNoDataLayout.visibility = View.GONE
         progressBar.visibility = View.GONE
         articlesRecycler.visibility = View.VISIBLE
         if (swipeRefresh.isRefreshing)
