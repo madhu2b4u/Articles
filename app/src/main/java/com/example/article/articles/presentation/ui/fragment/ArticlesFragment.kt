@@ -20,9 +20,7 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_articles.*
 import javax.inject.Inject
 import androidx.recyclerview.widget.DividerItemDecoration
-
-
-
+import com.example.article.articles.data.models.ArticlesResponse
 
 
 class ArticlesFragment : DaggerFragment() {
@@ -51,15 +49,11 @@ class ArticlesFragment : DaggerFragment() {
                 articlesViewModel.articleResult.observe(this@ArticlesFragment, Observer {
                     when (it.status) {
                         Status.LOADING -> showLoading()
-                        Status.ERROR -> {
-                            showErrorView()
-                        }
+                        Status.ERROR -> showErrorView()
                         Status.SUCCESS -> {
                             hideLoading()
                             it.data?.let { article ->
-                                toolbar.title = article.title
-                                val nonNullArticleList = article.articles.filter { it.description != null || it.title != null|| it.imageHref != null }
-                                articlesAdapter.populateArticles(nonNullArticleList)
+                                setResponseToView(article)
                             }
 
                         }
@@ -76,6 +70,17 @@ class ArticlesFragment : DaggerFragment() {
 
                 }
             }
+        }
+    }
+
+    private fun setResponseToView(article: ArticlesResponse) {
+        toolbar.title = article.title
+        if (article.articles.isEmpty()) {
+            showErrorView()
+        } else {
+            val nonNullArticleList =
+                article.articles.filter { it.description != null || it.title != null || it.imageHref != null }
+            articlesAdapter.populateArticles(nonNullArticleList)
         }
     }
 
