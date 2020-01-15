@@ -1,6 +1,5 @@
 package com.example.article.articles.data.models
 
-import com.example.article.articles.data.models.Article
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 

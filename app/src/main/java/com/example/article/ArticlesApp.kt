@@ -1,7 +1,7 @@
 package com.example.article
 
 
-import com.example.articles.di.DaggerArticleAppComponent
+import com.example.article.di.DaggerArticleAppComponent
 import com.facebook.drawee.backends.pipeline.Fresco
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
@@ -14,7 +14,7 @@ class ArticlesApp : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        Fresco.initialize(this);
+        Fresco.initialize(this)
     }
 
 

@@ -1,6 +1,5 @@
 package com.example.article.articles.domain
 
-import com.example.article.articles.domain.GetArticlesUseCase
 import com.example.article.articles.data.repository.ArticleRepository
 import javax.inject.Inject
 
