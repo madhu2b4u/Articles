@@ -1,7 +1,6 @@
 package com.example.article
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.article.articles.data.models.Article
 import com.example.article.articles.data.models.ArticlesResponse
 import com.example.article.articles.data.remote.services.ArticlesService
 import com.example.article.articles.data.remote.source.ArticleRemoteDataSource
@@ -35,16 +34,7 @@ class ArticlesRemoteDataSourceTest {
 
     private lateinit var articleService: ArticlesService
 
-
-    private val fakeArticles = listOf(
-        Article(
-            "Beavers",
-            "Beavers are second only to humans in their ability to manipulate and change their environment. They can measure up to 1.3 metres long. A group of beavers is called a colony ",
-            "http://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/American_Beaver.jpg/220px-American_Beaver.jpg"
-        )
-    )
-
-    private val articlesResponse = ArticlesResponse("About Canada",fakeArticles)
+    private val articlesResponse = TestUtils().articlesResponse
 
     @Before
     fun init() {
@@ -55,7 +45,8 @@ class ArticlesRemoteDataSourceTest {
             }
         }
 
-        articleRemoteDataSource = ArticleRemoteDataSourceImpl(articleService, mainCoroutineRule.coroutineContext)
+        articleRemoteDataSource =
+            ArticleRemoteDataSourceImpl(articleService, mainCoroutineRule.coroutineContext)
 
 
     }
@@ -69,7 +60,8 @@ class ArticlesRemoteDataSourceTest {
             }
         }
 
-        articleRemoteDataSource = ArticleRemoteDataSourceImpl(articleService, mainCoroutineRule.coroutineContext)
+        articleRemoteDataSource =
+            ArticleRemoteDataSourceImpl(articleService, mainCoroutineRule.coroutineContext)
 
         // Will be launched in the mainThreadSurrogate dispatcher
         val result = articleRemoteDataSource.getArticles()
@@ -88,12 +80,10 @@ class ArticlesRemoteDataSourceTest {
             }
         }
 
-        articleRemoteDataSource = ArticleRemoteDataSourceImpl(articleService, mainCoroutineRule.coroutineContext)
+        articleRemoteDataSource =
+            ArticleRemoteDataSourceImpl(articleService, mainCoroutineRule.coroutineContext)
 
-        val result = articleRemoteDataSource.getArticles()
-
-
-
+        assert(articleRemoteDataSource.getArticles() ==  articlesResponse)
 
     }
 

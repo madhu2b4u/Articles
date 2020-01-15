@@ -36,8 +36,8 @@ class ArticlesRecyclerAdapter @Inject constructor() :
 
         fun bind(article: Article) {
             with(itemView) {
-                    val title = article.title
-                    val desc = article.description
+                val title = article.title?.trim()
+                val desc = article.description?.trim()
                     val image = article.imageHref
 
                     imgArticle.setImageURI(image)

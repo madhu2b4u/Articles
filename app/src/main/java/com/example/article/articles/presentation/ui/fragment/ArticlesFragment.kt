@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.article.R
+import com.example.article.articles.data.models.ArticlesResponse
 import com.example.article.articles.presentation.ui.adapter.ArticlesRecyclerAdapter
 import com.example.article.articles.presentation.viewmodel.ArticlesViewModel
 import com.example.article.common.Status
@@ -19,8 +20,6 @@ import com.example.article.common.ViewModelFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_articles.*
 import javax.inject.Inject
-import androidx.recyclerview.widget.DividerItemDecoration
-import com.example.article.articles.data.models.ArticlesResponse
 
 
 class ArticlesFragment : DaggerFragment() {
@@ -96,14 +95,9 @@ class ArticlesFragment : DaggerFragment() {
         articlesRecycler.layoutManager = LinearLayoutManager(activity)
         articlesRecycler.adapter = articlesAdapter
         swipeRefresh.setOnRefreshListener {
+            swipeRefresh.isRefreshing = false
             articlesViewModel.loadArticles()
         }
-
-        val dividerItemDecoration = DividerItemDecoration(
-            context, (articlesRecycler.layoutManager as LinearLayoutManager).orientation
-        )
-        articlesRecycler.addItemDecoration(dividerItemDecoration)
-
 
         activity?.let {
             (it as AppCompatActivity).setSupportActionBar(toolbar)

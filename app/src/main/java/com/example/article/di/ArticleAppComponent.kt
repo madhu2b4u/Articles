@@ -1,13 +1,11 @@
-package com.example.articles.di
+package com.example.article.di
 
 import android.app.Application
 import com.example.article.ArticlesApp
 import com.example.article.articles.di.ArticlesRemoteModule
 import com.example.article.articles.di.DomainModule
 import com.example.article.articles.di.PresentationModule
-import com.example.article.di.ActivityBuilderModule
-import com.example.article.di.FragmentBuilderModule
-import com.example.article.di.NetworkModule
+import com.example.articles.di.AppModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule

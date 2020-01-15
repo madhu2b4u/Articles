@@ -1,9 +1,8 @@
 package com.example.article.articles.data.repository
 
 import androidx.lifecycle.liveData
-import com.example.article.common.Result
 import com.example.article.articles.data.remote.source.ArticleRemoteDataSource
-import com.example.article.articles.data.repository.ArticleRepository
+import com.example.article.common.Result
 import javax.inject.Inject
 
 class ArticleRepositoryImpl @Inject constructor(
